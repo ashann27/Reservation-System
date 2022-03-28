@@ -6,9 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-//THEN LAST 2 PARTS OMG
-//WHEN MANAGER STARTS LOAD BOTH ARRAYLISTS BY READING THE DIRECTORY
-
 public class Manager {
     Account accountDefault = new Account();
     Account myAccountDefault;
@@ -614,14 +611,6 @@ public class Manager {
 
         Path reservationFileToDelete = Paths.get(documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationToDelete + ".txt");
         Files.deleteIfExists(reservationFileToDelete);
-
-
-        //AFTER
-        //convert SAVE AND COMPLETE THE RESERVATION to toString() method.
-
-        //exceptions
-        //add test cases
-        //make date field more picky (ask the user reservation day , month, and year, then create a date object using that
 
     }
 
