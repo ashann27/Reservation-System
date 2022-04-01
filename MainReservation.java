@@ -16,7 +16,6 @@ public class MainReservation {
         Boolean locationSet = false;
         String documents = "";
 
-
         do {
             documents = setLocation(documents, locationSet);
             locationSet=true;
@@ -44,11 +43,11 @@ public class MainReservation {
                     manager.deleteReservation(documents);
                     break;
 
-                case 6:  // delete a new reservation
+                case 6:  // update an account
                     manager.updateAccount(documents);
                     break;
 
-                case 9:
+                case 9: // update a account's
                     scan.close();
                     System.exit(0);
                     break;
@@ -61,9 +60,6 @@ public class MainReservation {
     //=============================================================
     // Display Menu
     //=============================================================
-//=============================================================
-    // Display Menu
-    //=============================================================
     public static void displayMenu() {
         System.out.println("\nWelcome to Rental Reservation System for Hotel, House, and Cabin! ");
         System.out.println("1. Create an Account for New User");
@@ -71,8 +67,7 @@ public class MainReservation {
         System.out.println("3. Create a Reservation (must already have an Account");
         System.out.println("4. Modify a Reservation (must already have a completed Reservation)");
         System.out.println("5. Cancel a Reservation (must already have a completed Reservation)");
-        System.out.println("6. Display all Reservation (must already have a completed Reservation)");
-        System.out.println("7. Update an account (must already have a an account)");
+        System.out.println("6. Update an account (must already have a an account)");
 
 
         System.out.println("9. Exit .... ");
