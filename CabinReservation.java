@@ -1,67 +1,50 @@
 import java.io.*;
 
-/**
- *
- */
 public class CabinReservation extends Reservation {
 
-
-
-    /**
-     *Whether the reservation has a full kitchen present or not
-     */
+    //Attributes for CabinReservation
     protected boolean fullKitchenPresent;
-
-    /**
-     *  Whether the reservation has a loft or not
-     */
     protected boolean loftPresent;
-
     protected int priceOfReservation;
 
-    /**
-     * Getter for fullKitchenPresent
-     */
+    //////////////////////////////////////////
+    //Getters & setters for CabinReservation//
+    //////////////////////////////////////////
+
+    //Getter and setter for fullKitchenPresent
     public boolean getFullKitchenPresent()  {
         return fullKitchenPresent;
     }
-    /**
-     * Setter for fullKitchenPresent
-     */
+
     public void setFullKitchenPresent(boolean fullKitchenPresent) {
         this.fullKitchenPresent = fullKitchenPresent;
     }
 
-
-    /**
-     * Getter for loftPresent
-     */
+    //Getter and setter for loftPresent
     public boolean getLoftPresent()  {
         return loftPresent;
     }
-    /**
-     * Setter for loftPresent
-     */
+
     public void setLoftPresent(boolean loftPresent) {
         this.loftPresent = loftPresent;
     }
 
-    /**
-     * Getter for priceOfReservation
-     */
+
+    //Getter and setter for priceOfReservation
     public int getPriceOfReservation()  {
         return priceOfReservation;
     }
-    /**
-     * Setter for priceOfReservation
-     */
+
     public void setPriceOfReservation(int priceOfReservation) {
         this.priceOfReservation = priceOfReservation;
     }
 
+    //////////////////////////////////////////
+    /////////Constructors & Methods//////////
+    //////////////////////////////////////////
+
     // 1st constructor without value
     public CabinReservation() {
-
     }
 
     //2nd constructor with more attributes and values
@@ -70,7 +53,6 @@ public class CabinReservation extends Reservation {
         super(accountNumber, reservationNumber);
         this.fullKitchenPresent = fullKitchenPresent;
         this.loftPresent = loftPresent;
-
     }
 
     //3rd constructor with reading from file
@@ -80,9 +62,7 @@ public class CabinReservation extends Reservation {
         fullKitchenPresent = Boolean.parseBoolean(line.substring(line.indexOf("<fullKitchenPresent>") + 20, line.indexOf("</fullKitchenPresent>")));
     }
 
-    /**
-     *  changes the price of a reservation
-     */
+    //Method to calculate price change of reservation
     public void changePrice() {
         priceOfReservation = 0;
         priceOfReservation = numberOfNights*120;
