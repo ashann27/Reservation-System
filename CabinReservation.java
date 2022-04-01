@@ -19,27 +19,6 @@ public class CabinReservation extends Reservation {
 
     protected int priceOfReservation;
 
-    // 1st constructor without value
-    public CabinReservation() throws FileNotFoundException {
-
-    }
-
-    //2nd constructor with more attributes and values
-    public CabinReservation(String accountNumber, String reservationNumber, boolean fullKitchenPresent, boolean loftPresent) throws FileNotFoundException {
-        // reservation number must start with "C"
-        super(accountNumber, reservationNumber);
-        this.fullKitchenPresent = fullKitchenPresent;
-        this.loftPresent = loftPresent;
-
-    }
-
-    //3rd constructor with reading from file
-    public CabinReservation(String line) throws FileNotFoundException {
-        super(line);
-        loftPresent = Boolean.parseBoolean(line.substring(line.indexOf("<loftPresent>") + 13, line.indexOf("</loftPresent>")));
-        fullKitchenPresent = Boolean.parseBoolean(line.substring(line.indexOf("<fullKitchenPresent>") + 20, line.indexOf("</fullKitchenPresent>")));
-    }
-
     /**
      * Getter for fullKitchenPresent
      */
@@ -70,18 +49,39 @@ public class CabinReservation extends Reservation {
     /**
      * Getter for priceOfReservation
      */
-    public int getPriceofReservation()  {
+    public int getPriceOfReservation()  {
         return priceOfReservation;
     }
     /**
      * Setter for priceOfReservation
      */
-    public void setPriceofReservation(int priceofReservation) {
-        this.priceOfReservation = priceofReservation;
+    public void setPriceOfReservation(int priceOfReservation) {
+        this.priceOfReservation = priceOfReservation;
+    }
+
+    // 1st constructor without value
+    public CabinReservation() {
+
+    }
+
+    //2nd constructor with more attributes and values
+    public CabinReservation(String accountNumber, String reservationNumber, boolean fullKitchenPresent, boolean loftPresent) {
+        // reservation number must start with "C"
+        super(accountNumber, reservationNumber);
+        this.fullKitchenPresent = fullKitchenPresent;
+        this.loftPresent = loftPresent;
+
+    }
+
+    //3rd constructor with reading from file
+    public CabinReservation(String line) {
+        super(line);
+        loftPresent = Boolean.parseBoolean(line.substring(line.indexOf("<loftPresent>") + 13, line.indexOf("</loftPresent>")));
+        fullKitchenPresent = Boolean.parseBoolean(line.substring(line.indexOf("<fullKitchenPresent>") + 20, line.indexOf("</fullKitchenPresent>")));
     }
 
     /**
-     *  changes the price of a resrevation
+     *  changes the price of a reservation
      */
     public void changePrice() {
         priceOfReservation = 0;
@@ -152,7 +152,7 @@ public class CabinReservation extends Reservation {
         //output reservation information to console
         BufferedReader r = new BufferedReader( new FileReader( documents + "\\Reservation System\\Reservations\\" + "acc-" + cabinReservationDefault.accountNumber + "\\" + "res-" + newReservationNumber + ".txt") );
         String output = "";
-        String line = null;
+        String line;
         while ((line = r.readLine()) != null) {
             output += line;
 
