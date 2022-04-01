@@ -1,31 +1,26 @@
 import java.io.*;
 
-/**
- *
- */
 public class HouseReservation extends Reservation {
 
-
-    /**
-     * How many floors the house contains
-     */
+    //Attribute for HotelReservation
     protected int numberOfFloors;
 
-    /**
-     * Getter for numberOfFloors
-     */
+    //////////////////////////////////////////
+    //Getters & setters for HotelReservation//
+    //////////////////////////////////////////
     public int getNumberOfFloors() {
+
         return numberOfFloors;
     }
 
-    /**
-     * Setter for numberOfFloors
-     */
     public void setNumberOfFloors(int numberOfFloors) {
+
         this.numberOfFloors = numberOfFloors;
     }
 
-
+    /////////////////////////////////////////
+    /////////Constructors & Methods//////////
+    /////////////////////////////////////////
     // 1st constructor without value
     public HouseReservation() {
     }
@@ -44,6 +39,7 @@ public class HouseReservation extends Reservation {
 
     }
 
+    //Method to calculate price change of reservation
     public int changePrice() {
         priceOfReservation = 0;
         priceOfReservation = numberOfNights*120;
@@ -54,8 +50,11 @@ public class HouseReservation extends Reservation {
         return priceOfReservation;
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    ////////////////Method to save and complete a reservation//////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     public String toString(String documents, String newReservationNumber, HouseReservation houseReservationDefault) throws IOException {
-        /////////////////////////////SAVE AND COMPLETE THE RESERVATION////////////////////////////////////////////////////////
         new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + houseReservationDefault.accountNumber + "\\").mkdirs();
         //Create a new reservation
         File myObj = new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + houseReservationDefault.accountNumber + "\\" + "res-" + newReservationNumber + ".txt");

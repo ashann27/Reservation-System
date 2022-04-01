@@ -79,9 +79,10 @@ public class CabinReservation extends Reservation {
         priceOfReservation += ((numberOfBathrooms - 1)*5);
         }
     }
-
+    ///////////////////////////////////////////////////////////////////////////////////
+    ////////////////Method to save and complete a reservation//////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     public String toString(String documents, String newReservationNumber, CabinReservation cabinReservationDefault) throws IOException {
-        /////////////////////////////SAVE AND COMPLETE THE RESERVATION////////////////////////////////////////////////////////
         new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + cabinReservationDefault.accountNumber + "\\").mkdirs();
         //Create a new reservation
         File myObj = new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + cabinReservationDefault.accountNumber + "\\" + "res-" + newReservationNumber + ".txt");

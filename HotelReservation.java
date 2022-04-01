@@ -4,30 +4,25 @@ import java.io.*;
  *
  */
 public class HotelReservation extends Reservation {
-
-    /**
-     * Whether a kitchenette is present or not
-     */
+    //Attribute for HotelReservation
     protected boolean kitchenettePresent;
 
-    /**
-     * Getter for kitchenettePresent
-     */
+
+    //////////////////////////////////////////
+    //Getters & setters for HotelReservation//
+    //////////////////////////////////////////
     public boolean getKitchenettePresent()  {
         return kitchenettePresent;
-
     }
-
-
-    /**
-     * Setter for kitchenettePresent
-     */
     public void setKitchenettePresent(boolean kitchenettePresent) {
+
         this.kitchenettePresent = kitchenettePresent;
     }
 
 
-
+    /////////////////////////////////////////
+    /////////Constructors & Methods//////////
+    /////////////////////////////////////////
     // 1st constructor without value
     public HotelReservation() {
 
@@ -46,7 +41,7 @@ public class HotelReservation extends Reservation {
         kitchenettePresent = Boolean.parseBoolean(line.substring(line.indexOf("<kitchenettePresent>") + 20, line.indexOf("</kitchenettePresent>")));
     }
 
-
+    //Method to calculate price change of reservation
     public void changePrice() {
         priceOfReservation = 0;
         priceOfReservation = numberOfNights*120;
@@ -58,8 +53,10 @@ public class HotelReservation extends Reservation {
         if (kitchenettePresent) priceOfReservation += 10;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////
+    ////////////////Method to save and complete a reservation//////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
     public String toString(String documents, String newReservationNumber, HotelReservation hotelReservationDefault) throws IOException {
-        /////////////////////////////SAVE AND COMPLETE THE RESERVATION////////////////////////////////////////////////////////
         new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + hotelReservationDefault.accountNumber + "\\").mkdirs();
         //Create a new reservation
         File myObj = new File(documents + "\\Reservation System\\Reservations\\" + "acc-" + hotelReservationDefault.accountNumber + "\\" + "res-" + newReservationNumber + ".txt");
@@ -116,33 +113,4 @@ public class HotelReservation extends Reservation {
         return output;
 
     }
-
-    /**
-     * @param reservationNumber
-     * @param reservationStartDate
-     * @param numberOfNights
-     * @param numberOfBeds
-     * @param lodgingSize
-     * @param numberOfBathrooms
-     * @param numberOfBedrooms
-     * @param reservationStatus
-     * @param priceOfReservation
-     * @param physicalAddress
-     * @param mailingAddress
-
-    public abstract void Reservation(void reservationNumber, Date reservationStartDate, int numberOfNights, int numberOfBeds, void lodgingSize, int numberOfBathrooms, int numberOfBedrooms, string reservationStatus, void priceOfReservation, boolean fullKitchenPresent, boolean loftPresent, string physicalAddress, string mailingAddress);
-
-
-     * @param reservationNumber
-     * @param reservationStartDate
-     * @param numberOfNights
-     * @param numberOfBeds
-     * @param lodgingSize
-     * @param numberOfBathrooms
-     * @param numberOfBedrooms
-     * @param reservationStatus
-     * @param physicalAddress
-
-    public abstract void Reservation(void reservationNumber, Date reservationStartDate, int numberOfNights, int numberOfBeds, void lodgingSize, int numberOfBathrooms, int numberOfBedrooms, string reservationStatus, void priceOfReservation, boolean fullKitchenPresent, boolean loftPresent, string physicalAddress);
-*/
 }
