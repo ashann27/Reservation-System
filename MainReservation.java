@@ -57,18 +57,17 @@ public class MainReservation {
     }
 
 
-    //=============================================================
-    // Display Menu
-    //=============================================================
+    /////////////////////////////
+    //////// Display Menu////////
+    /////////////////////////////
     public static void displayMenu() {
-        System.out.println("\nWelcome to Rental Reservation System for Hotel, House, and Cabin! ");
+        System.out.println("\nWelcome to the Reservation System! Let's start planning. ");
         System.out.println("1. Create an Account for New User");
         System.out.println("2. Enter Account Information for Returned User");
         System.out.println("3. Create a Reservation (must already have an Account");
         System.out.println("4. Modify a Reservation (must already have a completed Reservation)");
         System.out.println("5. Cancel a Reservation (must already have a completed Reservation)");
         System.out.println("6. Update an account (must already have a an account)");
-
 
         System.out.println("9. Exit .... ");
     }

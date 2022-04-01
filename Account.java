@@ -15,9 +15,7 @@ public class Account {
     //Getters & setters for HotelReservation//
     //////////////////////////////////////////
     public String getMailingAddress()  {
-
         return mailingAddress;
-
     }
 
     public void setMailingAddress(String mailAddy) {
@@ -36,7 +34,6 @@ public class Account {
 
 
     public int getPhoneNumber()  {
-
         return phoneNumber;
     }
 
@@ -73,8 +70,6 @@ public class Account {
     }
 
     public String getAccountNumber() {
-
-
         return accountNumber;
     }
 
@@ -90,28 +85,22 @@ public class Account {
         catch(IllegalStateException e) {
             System.out.print("Illegal State, this email address already exists");
         }
-
-
     }
 
 
     public String[] getReservationList() {
-
         return reservationList;
     }
 
     public void setReservationList(String[] reservationList) {
-
         this.reservationList = reservationList;
     }
 
     public ArrayList<Reservation> getReservation() {
-
         return reservation;
     }
 
     public void setReservation(ArrayList<Reservation> reservation) {
-
         this.reservation = reservation;
     }
 
@@ -176,7 +165,6 @@ public class Account {
                     + "Email Address: " + emailAddress;
         return dataToShow;
         }
-
     }
 
 

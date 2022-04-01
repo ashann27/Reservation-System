@@ -8,24 +8,19 @@ import java.util.Scanner;
 
 public class Manager {
     Account accountDefault = new Account();
-    Account myAccountDefault;
-    //public Reservation reservation;
     static Scanner scan = new Scanner(System.in);
-    ArrayList<Account> accountList = new ArrayList<Account>();
-    File[] filesList, accountFilesList;
-    File tempDirectory, myDirectory;
+    ArrayList<Account> accountList = new ArrayList<>();
 
-    String accountNumber;
-
-    // simple constructor without attributes
     public Manager() {
-
     }
 
-    //create an account
+    //////////////////////////////////////////////
+    ///////////Choice 1: Create an account////////
+    //////////////////////////////////////////////
     public void createAccount(String documents) {
         File directory = new File(documents + "\\Reservation System\\Accounts\\");
         File countAccountList[] = directory.listFiles();
+
         //All account and reservation numbers will be formatted to 10 and 9 characters, respectively
         String tempAccountNumber = String.format("%09d", (countAccountList.length));
 
@@ -42,7 +37,6 @@ public class Manager {
         Account newAccount = new Account(accountDefault.accountNumber, accountDefault.mailingAddress, accountDefault.phoneNumber, accountDefault.emailAddress);
         // add a new account to ArrayList acct
         accountList.add(newAccount);
-
 
         //Create a new account
         try {
@@ -62,33 +56,31 @@ public class Manager {
             System.out.println("Couldn't write to the file");
             e.printStackTrace();
         }
-
     }
 
-    //read account info from file
+    //////////////////////////////////////////////
+    ///////////Choice 2: Load account data////////
+    //////////////////////////////////////////////
     public void readInAccountListInfo(String documents) {
-
         String userPath = documents + "\\Reservation System\\Accounts\\dummy.txt";
         Path path = Paths.get(userPath);
         String accountNumber;
         String mailingAddress;
         String phoneNumber;
         String email;
-        //check if dummy account exists
-        //skip it and read the rest of the files in
+
+        //check if dummy account exists, the dummy account proves the existence of a previous registration
         if (Files.exists(path)) {
-            //create dummy account in array to offset dummy account in folder
+            //create dummy account in array so dummy isn't included in the total number of accounts
             Account dummyAccount = new Account();
             accountList.add(dummyAccount);
 
-            //ignores dummy account in folder
+            //ignores dummy account in folder so it doesn't interfere with account count
             File directory = new File(documents + "\\Reservation System\\Accounts\\");
             File countAccountList[] = directory.listFiles();
             int countAccounts = (countAccountList.length - 1);
             try {
-
-
-                //loops through every account notepad doc in directory
+                //loops through every account notepad doc in directory and populates List
                 for (int i = 1; i < (countAccounts); i++) {
                     ArrayList<String> accountBeingRead = new ArrayList<String>();
                     String formattedCounter = String.format("%09d", (i));
@@ -104,6 +96,7 @@ public class Manager {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     //adds account info to account list
                     Account readDefaultAccount = new Account();
                     readDefaultAccount.setAccountNumber(readHelper(accountBeingRead.indexOf("Account Number: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
@@ -112,7 +105,7 @@ public class Manager {
                     readDefaultAccount.setEmailAddress(readHelper(accountBeingRead.indexOf("Email Address: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
 
 
-                    //////////////////adds reservation info to reservations list
+                    //adds reservation info to reservations list
                     int indexOfReservationsLabel = accountBeingRead.indexOf("Reservations: ");
                     //creates a list of of all reservations for an account
                     ArrayList<String> reservationList = new ArrayList<String>();
@@ -135,10 +128,7 @@ public class Manager {
                             readDefaultAccount.reservation.add(houseReservationDefault);
                         }
                     }
-
-
                     accountList.add(readDefaultAccount);
-
                     in.close();
                 }
             } catch (IOException e) {
@@ -150,10 +140,11 @@ public class Manager {
             boolean entry = false;
             MainReservation.setLocation(documents, entry);
         }
-
     }
-    ////////////////////////////make a reservation//////////////////////
 
+    //////////////////////////////////////////////
+    ///////////Choice 3: Make a reservation////////
+    //////////////////////////////////////////////
     public void makeReservation(String documents) throws IOException {
         File directory = new File(documents + "\\Reservation System\\Accounts\\");
         File countAccountList[] = directory.listFiles();
@@ -176,9 +167,7 @@ public class Manager {
         accountNumber = String.format("%09d", (Integer.parseInt(accountNumber)));
         accountNumber = "A" + accountNumber.toUpperCase();
 
-
         File f = new File(documents + "\\Reservation System\\Accounts\\" + "acc-" + accountNumber + ".txt");
-        //see if account exists
         if (f.exists() && !f.isDirectory()) {
             found = true;
             System.out.print("Let's make a new reservation! What Kind of reservation would you like to make?\n" +
@@ -187,7 +176,7 @@ public class Manager {
                     "For a House reservation enter 'House'\n" +
                     "(not case sensitive)"
             );
-            //
+
             String reservationType = scan.nextLine();
             reservationType = reservationType.toUpperCase();
 
@@ -200,12 +189,15 @@ public class Manager {
             Arrays.sort(countReservationList);
             String newReservationNumberString = "";
 
-            if (countReservationList.length < 1){newReservationNumberString = "0";}
-            else {newReservationNumberString = countReservationList[countReservationList.length-1].getName().substring(7, 17);}
-            //convert to int and add 1
-            int newReservationNumberInt = ((Integer.parseInt(newReservationNumberString))+1);
-            newReservationNumberString = String.format("%010d", (newReservationNumberInt));
+            if (countReservationList.length < 1) {
+                newReservationNumberString = "0";
+            } else {
+                newReservationNumberString = countReservationList[countReservationList.length - 1].getName().substring(7, 17);
+            }
 
+            //convert to int and add 1, zero leads to a null pointer error
+            int newReservationNumberInt = ((Integer.parseInt(newReservationNumberString)) + 1);
+            newReservationNumberString = String.format("%010d", (newReservationNumberInt));
 
             if (reservationType.equals("CABIN")) {
                 //creates a cabin reservation
@@ -253,7 +245,6 @@ public class Manager {
 
             } else if (reservationType.equals("HOTEL")) {
 
-
                 //creates a hotel reservation
                 HotelReservation hotelReservationDefault = new HotelReservation();
                 hotelReservationDefault.accountNumber = accountNumber;
@@ -290,8 +281,6 @@ public class Manager {
 
                 hotelReservationDefault.setReservationStatus("Complete");
                 hotelReservationDefault.toString(documents, newReservationNumber, hotelReservationDefault);
-
-
 
             } else if (reservationType.equals("HOUSE")) {
 
@@ -352,12 +341,11 @@ public class Manager {
                 makeReservation(documents);
             }
         }
-
     }
 
-    //=============================================================
-    // Choice 4: Update Reservation
-    //=============================================================
+    //////////////////////////////////////////////
+    ///////////Update a reservation///////////////
+    //////////////////////////////////////////////
 
     public void updateResv(String documents) throws IOException {
         boolean found = false;
@@ -425,7 +413,6 @@ public class Manager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
 
             updateHelper(reservationBeingRead.indexOf(actualAnswer), newAttributeValue, documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationNumber + ".txt");
         } else if (reservationNumber.contains("HOT")) {
@@ -521,17 +508,15 @@ public class Manager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
             updateHelper(reservationBeingRead.indexOf(actualAnswer), newAttributeValue, documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationNumber + ".txt");
         }
 
     }
 
 
-    //=============================================================
-    // Choice 5: Delete Reservation
-    //=============================================================
+    //////////////////////////////////////////////
+    ///////////Delete a Reservation///////////////
+    //////////////////////////////////////////////
     public void deleteReservation(String documents) throws IOException {
         boolean foundAccount = false;
         boolean foundReservation = false;
@@ -594,8 +579,7 @@ public class Manager {
                 lines.remove(indexOfReservationToDelete);
                 wholeAccountFileSize--;
             }
-
-
+            
             try {
                 for (int k = 0; k != wholeAccountFileSize + 1; k++) {
                     writer.write(lines.get(k) + "\n");
@@ -611,23 +595,75 @@ public class Manager {
 
         Path reservationFileToDelete = Paths.get(documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationToDelete + ".txt");
         Files.deleteIfExists(reservationFileToDelete);
-
     }
 
-
-    //=============================================================
-    // Choice 6: Display Reservation
-    //=============================================================
+    //////////////////////////////////////////////
+    ///////////Display a Reservation//////////////
+    //////////////////////////////////////////////
     public void displayResv() {
         for (Account a : accountList) {
             System.out.print(a);
         }
     }
 
+    //////////////////////////////////////////////
+    ///////////Update an Account//////////////////
+    //////////////////////////////////////////////
 
+    public void updateAccount(String documents) throws IOException {
+        boolean found = false;
+        // check to see if the acctList is empty or not.
+        if (accountList.size() == 0) {
+            readInAccountListInfo(documents);
+        }
+
+        if (accountList.size() == 0)
+            createAccount(documents);
+        System.out.print("Please enter your account number, you may ignore leading zeros EX: A9 not A000000009 " + "\n" + "\n A");
+        String accountNumber = scan.next();
+        scan.nextLine();
+        accountNumber = String.format("%09d", (Integer.parseInt(accountNumber)));
+        accountNumber = "A" + accountNumber.toUpperCase();
+
+        System.out.println("Let's update your account! What would you like to change?\n" +
+                "To change your mailing address press '1'\n" +
+                "To change your phone number press '2'\n" +
+                "To change your email address press '3'\n");
+
+        String userChoice = scan.nextLine();
+        String stringArray[] = new String[4];
+        stringArray[1] = "Mailing Address: ";
+        stringArray[2] = "Phone Number: ";
+        stringArray[3] = "Email Address: ";
+
+
+        String actualAnswer = stringArray[(Integer.parseInt(userChoice))];
+
+        System.out.println("What would you like to change it to? ");
+        String newAttributeValue = scan.nextLine();
+
+        ArrayList<String> accountBeingRead = new ArrayList<String>();
+        FileReader fr = new FileReader(documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
+
+        BufferedReader in = new BufferedReader(fr);
+        try {
+            String currentLine;
+
+            while ((currentLine = in.readLine()) != null) {
+                accountBeingRead.add(currentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updateHelper(accountBeingRead.indexOf(actualAnswer), newAttributeValue, documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
+    }
+
+    //////////////////////////////////////////////
+    //////////////////Methods////////////////////
+    //////////////////////////////////////////////
     //reads user's y or n input then updates reservation or account
     static boolean booleanHelper(String userAnswer) {
-
         boolean validInput = false;
         boolean userAnswerBoolean = false;
         while (validInput == false) {
@@ -651,72 +687,11 @@ public class Manager {
         return userAnswerBoolean;
     }
 
-    //=============================================================
-    // Choice 4: Update Reservation
-    //=============================================================
-
-    public void updateAccount(String documents) throws IOException {
-        boolean found = false;
-        // check to see if the acctList is empty or not.
-        if (accountList.size() == 0) {
-            readInAccountListInfo(documents);
-        }
-
-        if (accountList.size() == 0)
-            createAccount(documents);
-
-        System.out.print("Please enter your account number, you may ignore leading zeros EX: A9 not A000000009 " + "\n" + "\n A");
-        String accountNumber = scan.next();
-        scan.nextLine();
-        accountNumber = String.format("%09d", (Integer.parseInt(accountNumber)));
-        accountNumber = "A" + accountNumber.toUpperCase();
-
-            System.out.println("Let's update your account! What would you like to change?\n" +
-
-                    "To change your mailing address press '1'\n" +
-                    "To change your phone number press '2'\n" +
-                    "To change your email address press '3'\n" );
-
-            String userChoice = scan.nextLine();
-            String stringArray[] = new String[4];
-            stringArray[1] = "Mailing Address: ";
-            stringArray[2] = "Phone Number: ";
-            stringArray[3] = "Email Address: ";
-
-
-            String actualAnswer = stringArray[(Integer.parseInt(userChoice))];
-
-            System.out.println("What would you like to change it to? ");
-            String newAttributeValue = scan.nextLine();
-
-            ArrayList<String> accountBeingRead = new ArrayList<String>();
-            FileReader fr = new FileReader(documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
-
-            BufferedReader in = new BufferedReader(fr);
-            try {
-                String currentLine;
-
-                while ((currentLine = in.readLine()) != null) {
-                    accountBeingRead.add(currentLine);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            updateHelper(accountBeingRead.indexOf(actualAnswer), newAttributeValue, documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
-        }
-
-
-
-    //use this to update files later
-    //figure out how to make it as automated as possible
     public static void updateHelper(int indexOfLabel, String updatedString, String reservationToUpdate) throws IOException {
-
         //accountToUpdate should be the reservation text file path
         //indexOfLabel is the index of the attribute being changed
         ///updatedString is the new information being added
+
         Path path = Paths.get(reservationToUpdate);
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
         //changes the line after lineNumber's string to the updated one
@@ -725,18 +700,19 @@ public class Manager {
     }
 
     public static String readHelper(int indexOfLabel, String accountToRead) throws IOException {
-
+        //indexOfLabel is the index of the attribute being changed
         //accountToRead should be the account number
+
         Path path = Paths.get(accountToRead);
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-        //reads the line after lineNumber's string
+        //reads the line after the attribute name
         String attribute = lines.get(indexOfLabel + 1);
         return attribute;
     }
 
     //reads account's reservation numbers, returns a list of reservations
     //reservationList is the list of reservations that will be returned, accountPathString is the path to the account document,
-    // IndexOfReservationsLabel is where the index label is in that specific document (just in case account document fields need to be moved)
+    //IndexOfReservationsLabel is where the index label is in that specific document (just in case account document fields need to be moved)
     public static List readReservationHelper(List reservationList, String accountPathString, int indexOfReservationsLabel) throws IOException {
 
         //accountToRead should be the account number
@@ -755,6 +731,5 @@ public class Manager {
             }
         }
         return reservationList;
-
     }
 }
