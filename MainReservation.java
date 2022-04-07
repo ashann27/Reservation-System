@@ -27,7 +27,7 @@ public class MainReservation {
                     manager.createAccount(documents);
                     break;
 
-                case 2:  // read in files from existing account user
+                case 2:  // read in files from existing accounts
                     manager.readInAccountListInfo(documents);
                     break;
 

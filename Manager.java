@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Manager {
-    Account accountDefault = new Account();
     static Scanner scan = new Scanner(System.in);
     ArrayList<Account> accountList = new ArrayList<>();
 
@@ -18,6 +17,7 @@ public class Manager {
     ///////////Choice 1: Create an account////////
     //////////////////////////////////////////////
     public void createAccount(String documents) {
+        Account accountDefault = new Account();
         File directory = new File(documents + "\\Reservation System\\Accounts\\");
         File countAccountList[] = directory.listFiles();
 
@@ -27,11 +27,15 @@ public class Manager {
         System.out.println("Your account number is: A" + tempAccountNumber);
         accountDefault.setAccountNumber("A" + tempAccountNumber);
         String newAccountNumber = accountDefault.accountNumber;
-        System.out.println("Please enter account address: ");
-        accountDefault.setMailingAddress(scan.nextLine());
+
+        while (accountDefault.mailingAddress==null || accountDefault.mailingAddress.isEmpty()) {
+            System.out.println("Please enter account address. Empty addresses aren't accepted");
+            accountDefault.setMailingAddress(scan.nextLine());
+        }
+
         System.out.print("Please enter a 10 digit phone number: ");
         accountDefault.setPhoneNumber(Integer.parseInt(scan.nextLine()));
-        System.out.print("Please enter your mailing address: ");
+        System.out.print("Please enter your email address: ");
         accountDefault.setEmailAddress(scan.nextLine());
 
         Account newAccount = new Account(accountDefault.accountNumber, accountDefault.mailingAddress, accountDefault.phoneNumber, accountDefault.emailAddress);
@@ -364,7 +368,9 @@ public class Manager {
         accountNumber = "A" + accountNumber.toUpperCase();
         System.out.println("What's the reservation number? Remember to include the first 3 characters. ex: HOU for house");
         String reservationNumber = scan.nextLine();
-        reservationNumber = reservationNumber.toUpperCase();
+        String reservationType = reservationNumber.substring(0, 3);
+        reservationNumber = String.format("%010d", (Integer.parseInt(reservationNumber.substring(3))));
+        reservationNumber = reservationType.toUpperCase() + reservationNumber;
 
         if (reservationNumber.contains("CAB")) {
             System.out.println("Looks like you're update a Cabin reservation! What would you like to change?\n" +
@@ -558,7 +564,7 @@ public class Manager {
         String reservationToDelete = scan.nextLine();
         String reservationTypeToDelete = reservationToDelete.substring(0, 3);
         String reservationNumberToDelete = reservationToDelete.substring(3);
-        reservationNumberToDelete = String.format("%09d", Integer.parseInt(reservationNumberToDelete));
+        reservationNumberToDelete = String.format("%010d", Integer.parseInt(reservationNumberToDelete));
         reservationToDelete = reservationTypeToDelete.toUpperCase() + reservationNumberToDelete;
 
         //at the index under the reservation to be cancelled, shift everything up
@@ -579,7 +585,7 @@ public class Manager {
                 lines.remove(indexOfReservationToDelete);
                 wholeAccountFileSize--;
             }
-            
+
             try {
                 for (int k = 0; k != wholeAccountFileSize + 1; k++) {
                     writer.write(lines.get(k) + "\n");
