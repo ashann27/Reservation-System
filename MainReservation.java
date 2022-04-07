@@ -47,7 +47,7 @@ public class MainReservation {
                     manager.updateAccount(documents);
                     break;
 
-                case 9: // update a account's
+                case 9: // close
                     scan.close();
                     System.exit(0);
                     break;

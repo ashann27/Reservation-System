@@ -9,7 +9,29 @@ import java.util.Scanner;
 class ManagerTest {
 
     @Test
-    void createAccount() {
+    void createAccount() {//tests an account can be created
+        Scanner scan = new Scanner(System.in);
+        Manager manager = new Manager();
+        String documents = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+        File directory = new File(documents + "\\Reservation System\\Accounts\\");
+        File countAccountList[] = directory.listFiles();
+        int countAccounts = (countAccountList.length);
+
+
+        // check to see if the account list is empty or not.
+        if (countAccounts == 0) {
+            manager.readInAccountListInfo(documents);
+        }
+
+        if (countAccounts == 0) {
+           manager.createAccount(documents);
+        }
+        manager.createAccount(documents);
+        File countAccountList2[] = directory.listFiles();
+        int countAccounts2 = (countAccountList2.length);
+
+        Assert.assertTrue(countAccounts2==countAccounts + 1);
+
 
     }
 
@@ -29,7 +51,7 @@ class ManagerTest {
 
     @Test
     void makeReservation() throws IOException {
-        //tests that each of the reservations can be made
+        //tests that each of the reservation types can be made
         Scanner scan = new Scanner(System.in);
         Manager manager = new Manager();
         String documents = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
@@ -40,11 +62,11 @@ class ManagerTest {
 
         // check to see if the account list is empty or not.
         if (countAccounts == 0) {
-            readInAccountListInfo();
+            manager.readInAccountListInfo(documents);
         }
 
         if (countAccounts == 0) {
-            createAccount();
+            manager.createAccount(documents);
         }
 
 
@@ -143,11 +165,11 @@ class ManagerTest {
         int countAccounts = (countAccountList.length);
         // check to see if the acctList is empty or not.
         if (countAccountList.length == 0) {
-            readInAccountListInfo();
+            manager.readInAccountListInfo(documents);
         }
 
         if (countAccountList.length == 0)
-            createAccount();
+            manager.createAccount(documents);
 
         System.out.print("To test this method, please enter your account number, you may ignore leading zeros EX: A9 not A000000009 " + "\n" + "\n A");
         String accountNumber = scan.next();
@@ -164,13 +186,66 @@ class ManagerTest {
         System.out.println("Great! Let's begin the test");
 
         manager.deleteReservation(documents);
-        boolean reservationExists = new File(documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationNumber + ".txt").isFile();
+        boolean reservationExists = new File(documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt").isFile();
         Assert.assertFalse(reservationExists);
 
 
     }
 
     @Test
-    void updateAccount() {
+    void updateAccount() throws IOException {
+        Scanner scan = new Scanner(System.in);
+        Manager manager = new Manager();
+        String documents = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
+        File directory = new File(documents + "\\Reservation System\\Accounts\\");
+        File countAccountList[] = directory.listFiles();
+        int countAccounts = (countAccountList.length);
+        // check to see if the acctList is empty or not.
+        if (countAccountList.length == 0) {
+            readInAccountListInfo();
+        }
+
+        if (countAccountList.length == 0)
+            createAccount();
+
+        System.out.print("To test this method, please enter your account number, you may ignore leading zeros EX: A9 not A000000009 " + "\n" + "\n A");
+        String accountNumber = scan.next();
+        scan.nextLine();
+        accountNumber = String.format("%09d", (Integer.parseInt(accountNumber)));
+        accountNumber = "A" + accountNumber.toUpperCase();
+
+        ArrayList<String> accountBeingRead = new ArrayList<String>();
+        FileReader fr = new FileReader(documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
+
+        BufferedReader in = new BufferedReader(fr);
+        try {
+            String currentLine;
+
+            while ((currentLine = in.readLine()) != null) {
+                accountBeingRead.add(currentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        manager.updateAccount(documents);
+
+        ArrayList<String> accountBeingRead2 = new ArrayList<String>();
+        FileReader fr2 = new FileReader(documents + "\\Reservation System\\Accounts\\acc-" + accountNumber + ".txt");
+
+        BufferedReader in2 = new BufferedReader(fr2);
+        try {
+            String currentLine;
+
+            while ((currentLine = in2.readLine()) != null) {
+                accountBeingRead2.add(currentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertFalse(accountBeingRead ==accountBeingRead2);
     }
 }
