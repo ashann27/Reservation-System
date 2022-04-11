@@ -47,6 +47,10 @@ public class MainReservation {
                     manager.updateAccount(documents);
                     break;
 
+                case 7:  // update a reservation
+                    manager.updateResv(documents);
+                    break;
+
                 case 9: // close
                     scan.close();
                     System.exit(0);
@@ -67,7 +71,8 @@ public class MainReservation {
         System.out.println("3. Create a Reservation (must already have an Account");
         System.out.println("4. Modify a Reservation (must already have a completed Reservation)");
         System.out.println("5. Cancel a Reservation (must already have a completed Reservation)");
-        System.out.println("6. Update an account (must already have a an account)");
+        System.out.println("6. Update an account (must already have an account)");
+        System.out.println("7. Update a Reservation (must already have a reservation)");
 
         System.out.println("9. Exit .... ");
     }

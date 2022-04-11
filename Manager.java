@@ -34,7 +34,7 @@ public class Manager {
         }
 
         System.out.print("Please enter a 10 digit phone number: ");
-        accountDefault.setPhoneNumber(Integer.parseInt(scan.nextLine()));
+        accountDefault.setPhoneNumber(String.valueOf(scan.nextLine()));
         System.out.print("Please enter your email address: ");
         accountDefault.setEmailAddress(scan.nextLine());
 
@@ -105,7 +105,7 @@ public class Manager {
                     Account readDefaultAccount = new Account();
                     readDefaultAccount.setAccountNumber(readHelper(accountBeingRead.indexOf("Account Number: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
                     readDefaultAccount.setMailingAddress(readHelper(accountBeingRead.indexOf("Mailing Address: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
-                    readDefaultAccount.setPhoneNumber(Integer.parseInt(readHelper(accountBeingRead.indexOf("Phone Number: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt")));
+                    readDefaultAccount.setPhoneNumber(readHelper(accountBeingRead.indexOf("Phone Number: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
                     readDefaultAccount.setEmailAddress(readHelper(accountBeingRead.indexOf("Email Address: "), documents + "\\Reservation System\\Accounts\\acc-A" + formattedCounter + ".txt"));
 
 
@@ -373,7 +373,7 @@ public class Manager {
         reservationNumber = reservationType.toUpperCase() + reservationNumber;
 
         if (reservationNumber.contains("CAB")) {
-            System.out.println("Looks like you're update a Cabin reservation! What would you like to change?\n" +
+            System.out.println("Looks like you're updating a Cabin reservation! What would you like to change?\n" +
 
                     "To change your physical address press '1'\n" +
                     "To change your mailing address press '2'\n" +
@@ -470,7 +470,7 @@ public class Manager {
 
             updateHelper(reservationBeingRead.indexOf(actualAnswer), newAttributeValue, documents + "\\Reservation System\\Reservations\\acc-" + accountNumber + "\\res-" + reservationNumber + ".txt");
         } else if (reservationNumber.contains("HOU")) {
-            System.out.println("Looks like you're update a House reservation! What would you like to change?\n" +
+            System.out.println("Looks like you're updating a House reservation! What would you like to change?\n" +
 
                     "To change your physical address press '1'\n" +
                     "To change your mailing address press '2'\n" +

@@ -6,7 +6,7 @@ public class Account {
     //Attributes & Arrays for Account
     protected String accountNumber = "-99";
     protected String mailingAddress;
-    protected int phoneNumber;
+    protected String phoneNumber;
     protected String emailAddress;
     protected String reservationList[];
     protected ArrayList<Reservation> reservation = new ArrayList<Reservation>();
@@ -33,11 +33,11 @@ public class Account {
     }
 
 
-    public int getPhoneNumber()  {
+    public String getPhoneNumber()  {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNum) {
+    public void setPhoneNumber(String phoneNum) {
 
         try {
             this.phoneNumber = phoneNum;
@@ -113,7 +113,7 @@ public class Account {
     }
 
     // 2nd constructor with more attributes and values
-    public Account(String accountNumber, String mailingAddress, int phoneNumber, String emailAddress) {
+    public Account(String accountNumber, String mailingAddress, String phoneNumber, String emailAddress) {
         {
             try {
                 this.accountNumber = accountNumber;
@@ -130,7 +130,7 @@ public class Account {
     //3rd constructor
     public Account(String line) {
         mailingAddress = line.substring(line.indexOf("<mailingAddress>") + 16, line.indexOf("</mailingAddress>"));
-        phoneNumber = Integer.parseInt(line.substring(line.indexOf(("<phoneNumber>") + 13, line.indexOf("</phoneNumber>"))));
+        phoneNumber = line.substring(line.indexOf(("<phoneNumber>") + 13, line.indexOf("</phoneNumber>")));
         emailAddress = line.substring(line.indexOf("<emailAddress>") + 14, line.indexOf("</emailAddress>"));
         parseReservation(line);
     }
